@@ -32,6 +32,7 @@ class Transformer {
  private:
   ros::Publisher nmea_pub_;
   ros::Subscriber navpvt_sub_;
+  std::string frame_id_;
 
   void receiveNavPVT(const ublox_msgs::NavPVT::ConstPtr &navsat_msg);
 };
@@ -42,6 +43,7 @@ Transformer::Transformer() {
   ROS_INFO("Subscribing to NavPVT topic %s", navpvt_sub_.getTopic().c_str());
   nmea_pub_ = nh.advertise<nmea_msgs::Sentence>("nmea", 1);
   ROS_INFO("Advertising NMEA topic %s", nmea_pub_.getTopic().c_str());
+  nh.getParam("frame_id", frame_id_);
 }
 
 void Transformer::receiveNavPVT(const ublox_msgs::NavPVT::ConstPtr &navpvt_msg) {
@@ -97,7 +99,7 @@ void Transformer::receiveNavPVT(const ublox_msgs::NavPVT::ConstPtr &navpvt_msg) 
 
   nmea_msgs::Sentence nmea_msg;
   nmea_msg.header.stamp = now;
-  nmea_msg.header.frame_id = "gps";
+  nmea_msg.header.frame_id = frame_id_;
   nmea_msg.sentence = buf;
   nmea_pub_.publish(nmea_msg);
 }

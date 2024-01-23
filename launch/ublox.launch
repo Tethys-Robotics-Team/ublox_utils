@@ -24,13 +24,13 @@
     <arg name="navpvt_topic" doc="The incoming navpvt topic." default="/ublox_position_receiver/navpvt"/>
     <arg name="nmea_topic" doc="The outgoing nmea topic." default="/ntrip_client/nmea"/>
 
-    <arg name="ntrip_host" default="www.swipos.ch" />
+    <arg name="ntrip_host" default="3.143.243.81" />
     <arg name="ntrip_port" default="2101" />
-    <arg name="ntrip_mountpoint" default="MSM_GISGEO_LV95LHN95" />
+    <arg name="ntrip_mountpoint" default="NEAR-Swiss" />
     <arg name="ntrip_version" default="" />
     <arg name="ntrip_authentificate" default="true" />
-    <arg name="ntrip_username" />
-    <arg name="ntrip_password" />
+    <arg name="ntrip_username" default="test@gmail.com"/>
+    <arg name="ntrip_password" default="none"/>
 
     <!-- The ublox position receiver -->
     <node pkg="ublox_gps" type="ublox_gps" name="ublox_position_receiver"
@@ -67,6 +67,7 @@
           respawn_delay="$(arg respawn_delay)">
         <remap from="/navpvt" to="$(arg navpvt_topic)"/>
         <remap from="/nmea" to="$(arg nmea_topic)"/>
+        <param name="frame_id" value="$(arg frame_id_position_receiver)"/>
     </node>
 
     <!-- This node transforms mavros/rtcm to rtcm/Message -->

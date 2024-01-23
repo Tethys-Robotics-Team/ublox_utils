@@ -11,5 +11,8 @@ gnss:
   glonass: true
   galileo: true
   beidou: true
-dynamic_model: airborne1
+dynamic_model: portable
+frame_id: gnss
 debug: 0
+rate: 10.0
+nav_rate: 1
